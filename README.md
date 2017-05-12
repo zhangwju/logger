@@ -1,8 +1,13 @@
 # logger
 
-# 描述
+## 描述
 一个简单的日志库
-# API:
+## API:
+	#define LOG_DEBUG   1
+	#define LOG_INFO    2
+	#define LOG_WARN    3
+	#define LOG_ERROR   4
+		
     int logger_init();
 
     void logger_release();
@@ -15,7 +20,7 @@
 
     void log_debug(const char *format, ...);
 
-# 配置文件（conf/logger.conf）：
+## 配置文件（conf/logger.conf）：
     #configure file of logger 
     #eg: filename=/var/log/logger
     filename=/var/log/logger
@@ -32,7 +37,7 @@
     #default 1M
     log_size=1048576
 
-# 简单例子
+## 简单例子
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
