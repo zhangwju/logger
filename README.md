@@ -3,22 +3,24 @@
 ## 描述
 一个简单的日志库
 ## API:
-	#define LOG_DEBUG   1
-	#define LOG_INFO    2
-	#define LOG_WARN    3
-	#define LOG_ERROR   4
+``` c
+#define LOG_DEBUG   1
+#define LOG_INFO    2
+#define LOG_WARN    3
+#define LOG_ERROR   4
 		
-    int logger_init();
+int logger_init();
 
-    void logger_release();
+void logger_release();
 
-    void log_error(const char *format, ...);
+void log_error(const char *format, ...);
 
-    void log_warn(const char *format, ...);
+void log_warn(const char *format, ...);
 
-    void log_info(const char *format, ...);
+void log_info(const char *format, ...);
 
-    void log_debug(const char *format, ...);
+void log_debug(const char *format, ...);
+```
 
 ## 配置文件（conf/logger.conf）：
     #configure file of logger 
@@ -38,28 +40,31 @@
     log_size=1048576
 
 ## 简单例子
-    #include <stdio.h>
-    #include <string.h>
-    #include <stdlib.h>
-    #include "logger.h"
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "logger.h"
 
-    int main()
-    {
-	    if (logger_init()) {
-		      return -1;	
-	    }
+int main()
+{
+	if (logger_init()) {
+		return -1;	
+	}
 
-	    log_debug("This is debug, %s %d", "hello", 123);
-	    log_info(" This is info");
-	    log_warn(" This is warnning");
-	    log_error("This is error");
+	log_debug("This is debug, %s %d", "hello", 123);
+	log_info(" This is info");
+	log_warn(" This is warnning");
+	log_error("This is error");
 	
-	    logger_release();
-
-	    return 0;
-    }
-    /*DEBUG: 2017-05-12 06:45:25 This is debug, hello 123
-    INFO: 2017-05-12 06:45:25  This is info
-    WARN: 2017-05-12 06:45:25  This is warnning
-    ERROR: 2017-05-12 06:45:25 This is error
-    */
+	logger_release();
+	
+	return 0;
+}
+//运行结果
+/*DEBUG: 2017-05-12 06:45:25 This is debug, hello 123
+  INFO: 2017-05-12 06:45:25  This is info
+  WARN: 2017-05-12 06:45:25  This is warnning
+  ERROR: 2017-05-12 06:45:25 This is error
+*/    
+```
