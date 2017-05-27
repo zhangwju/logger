@@ -23,21 +23,23 @@ void log_debug(const char *format, ...);
 ```
 
 ## 配置文件（conf/logger.conf）：
-    #configure file of logger 
-    #eg: filename=/var/log/logger
-    filename=/var/log/logger
+```
+#configure file of logger 
+#eg: filename=/var/log/logger
+filename=/var/log/logger
 
-    #log_enable disable 0 | enable 1
-    log_enable=1
-    #log_level (LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG)
-    #LOG_ERROR 1
-    #LOG_WARN  2
-    #LOG_INFO  3
-    #LOG_DEBUG 4
-    log_level=1
+#log_enable disable 0 | enable 1
+log_enable=1
+#log_level (LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG)
+#LOG_ERROR 1
+#LOG_WARN  2
+#LOG_INFO  3
+#LOG_DEBUG 4
+log_level=1
 
-    #default 1M
-    log_size=1048576
+#default 1M
+log_size=1048576
+```
 
 ## 简单例子
 ```c
