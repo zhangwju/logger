@@ -3,7 +3,7 @@
 #
 
 LDFLAGS = -lpthread
-FPIC = -fPIC -c
+FPIC = -fPIC -c -g -Wall
 SHARED = -shared -o
 
 CFLAGS += $(TARGET_CFLAGS) \

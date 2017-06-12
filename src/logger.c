@@ -13,6 +13,8 @@
 #include <pthread.h>
 #include "logger.h"
 
+#define RESERVED	64
+
 typedef struct __logger_t
 {
 	char ifname[NAMESIZE];
@@ -122,13 +124,14 @@ static int log_check_reset_file()
 	
 	return 1;
 }
-static void log_vdebug(const char *format, int level, va_list  args)
+
+static void log_vdebug(const char *format, const char *func, unsigned int line_id, int level, va_list args)
 {
-	char line[256];
-	char logstr[512];
+	char line[512];
 	char timestr[128];
+	char *logstr = NULL;
 	time_t now;
-	
+
 	if (!g_lptr->enable) {
 		return;
 	}
@@ -143,25 +146,31 @@ static void log_vdebug(const char *format, int level, va_list  args)
 	
 	time(&now);
 	strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S", localtime(&now));
+
+	logstr = (char *)malloc(strlen(format) + strlen(timestr) + strlen(func) + RESERVED);
+	if (NULL == logstr) {
+		return;
+	}
+	
 	switch(level) {
 	case LOG_DEBUG:
-		sprintf(line, "DEBUG: %s %s\n", timestr, format);
+		sprintf(logstr, "%s [DEBUG] %s():%d %s\n", timestr, func, line_id, format);
 		break;
 	case LOG_INFO:
-		sprintf(line, "INFO: %s %s\n", timestr, format);
+		sprintf(logstr, "%s [INFO]: %s():%d %s\n", timestr, func, line_id, format);
 		break;
 	case LOG_WARN:
-		sprintf(line, "WARN: %s %s\n", timestr, format);
+		sprintf(logstr, "%s [WARN]: %s():%d %s\n", timestr, func, line_id, format);
 		break;
 	case LOG_ERROR:
-		sprintf(line, "ERROR: %s %s\n", timestr, format);
+		sprintf(logstr, "%s [ERROR]: %s():%d %s\n", timestr, func, line_id, format);
 		break;
 	}
 
 	if (g_lptr->lfp) {
 		pthread_mutex_lock(&g_lptr->mutex);
 		fseek(g_lptr->lfp, 0L, SEEK_END);
-		vsnprintf(logstr, 512, line, args);
+		vsnprintf(line, 511, line, args);
 		if (!log_check_reset_file()) {
 			pthread_mutex_unlock(&g_lptr->mutex);
 			exit(1);
@@ -174,41 +183,19 @@ static void log_vdebug(const char *format, int level, va_list  args)
 	if (g_lptr->level == 1) {
 		 vprintf(logstr, args);
     }
+
+	if (logstr) {
+		free(logstr);
+		logstr = NULL;
+	}
 }
 
-void log_error(const char *format, ...)
+void logger_print(const char *format, const char *func, unsigned int line, int level, ...)
 {
 	va_list args;
 	
-	va_start(args, format);
-	log_vdebug(format, LOG_ERROR, args);
-	va_end(args);
-}
-
-void log_warn(const char *format, ...)
-{
-	va_list args;
-	
-	va_start(args, format);
-	log_vdebug(format, LOG_WARN, args);
-	va_end(args);
-}
-
-void log_info(const char *format, ...)
-{
-	va_list args;
-	
-	va_start(args, format);
-	log_vdebug(format, LOG_INFO, args);
-	va_end(args);
-}
-
-void log_debug(const char *format, ...)
-{
-	va_list args;
-	
-	va_start(args, format);
-	log_vdebug(format, LOG_DEBUG, args);
+	va_start(args, level);
+	log_vdebug(format, func, line, level, args);
 	va_end(args);
 }
 

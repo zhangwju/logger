@@ -21,12 +21,14 @@ int logger_init();
 
 void logger_release();
 
-void log_error(const char *format, ...);
+void logger_print(const char *format, const char *func, unsigned int line, int level, ...);
 
-void log_warn(const char *format, ...);
+#define log_error(format, ...)	logger_print(format, __func__, __LINE__, LOG_ERROR, ## __VA_ARGS__) 
 
-void log_info(const char *format, ...);
+#define log_warn(format, ...)	logger_print(format, __func__, __LINE__, LOG_WARN, ## __VA_ARGS__)
 
-void log_debug(const char *format, ...);
+#define log_info(format, ...)	logger_print(format, __func__, __LINE__, LOG_INFO, ## __VA_ARGS__) 
+
+#define log_debug(format, ...)	logger_print(format, __func__, __LINE__, LOG_DEBUG, ## __VA_ARGS__) 
 
 #endif //__LOGGER_H_

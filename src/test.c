@@ -12,7 +12,7 @@ int main()
 		return -1;	
 	}
 
-	log_debug("This is debug, %s %d", "hello", 123);
+	log_debug("This is debug, %s %d", "first debug", 1);
 	log_info(" This is info");
 	log_warn(" This is warnning");
 	log_error("This is error");
