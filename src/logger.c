@@ -1,9 +1,9 @@
-/***********************************
+/**************************************
  * Filename: logger.c
  * Author: zhangwj
  * description: Simple logging Library
  * Date: 2017-05-12
- ************************************/
+ *************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
