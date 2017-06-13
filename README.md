@@ -54,7 +54,7 @@ int main()
 		return -1;	
 	}
 
-	log_debug("This is debug, %s %d", "hello", 123);
+	log_debug("%s %d", "This is first debug", 1);
 	log_info(" This is info");
 	log_warn(" This is warnning");
 	log_error("This is error");
@@ -64,9 +64,9 @@ int main()
 	return 0;
 }
 //运行结果
-/*DEBUG: 2017-05-12 06:45:25 This is debug, hello 123
-  INFO: 2017-05-12 06:45:25  This is info
-  WARN: 2017-05-12 06:45:25  This is warnning
-  ERROR: 2017-05-12 06:45:25 This is error
+/*2017-06-13 09:26:39 [DEBUG] main():15 This is first debug 1
+  2017-06-13 09:26:39 [INFO]: main():16  This is info
+  2017-06-13 09:26:39 [WARN]: main():17  This is warnning
+  2017-06-13 09:26:39 [ERROR]: main():18 This is error
 */    
 ```
