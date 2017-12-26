@@ -55,8 +55,8 @@ int main()
 	}
 
 	log_debug("%s %d", "This is first debug", 1);
-	log_info(" This is info");
-	log_warn(" This is warnning");
+	log_info("This is info");
+	log_warn("This is warnning");
 	log_error("This is error");
 	
 	logger_release();
