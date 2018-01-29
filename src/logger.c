@@ -96,7 +96,7 @@ int logger_init()
 void logger_release()
 {
 	if (g_lptr) {
-
+		pthread_mutex_destroy(&g_lptr->mutex);
 		if (g_lptr->lfp) {
 			fclose(g_lptr->lfp);
 		}
